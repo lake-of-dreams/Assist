@@ -1,0 +1,213 @@
+plugins {
+    id "de.undercouch.download" version "1.2"
+    id 'java'
+    id 'eclipse'
+    id 'application'
+    id 'maven'
+}
+
+// Meta information
+mainClassName = System.getProperty("mainClass")
+version = "1.0"
+group = "com.rsinghal.cep"
+sourceCompatibility = 1.8
+
+// Dependencies and where to get them (some are nonstandard)
+repositories {
+    mavenCentral()
+    maven {url "https://repo.eclipse.org/content/groups/releases/"}
+    flatDir {dirs "lib"}
+    flatDir {dirs "data/lib"}
+}
+
+dependencies {
+    // Machine learning
+    compile group: "com.googlecode.jcsv",            name: "jcsv",                    version: "1.4.0"
+    compile 'nz.ac.waikato.cms.weka:weka-stable:3.6.10'
+    // A native library used by weka
+//    compile name: 'libsvm'
+    compile group: "com.github.spullara.cli-parser", name: "cli-parser",              version: "1.1"
+    
+    compile group: "com.indri",     name: "indri",             version: "1.0"
+    compile group: "com.indri",     name: "RetUI",             version: "1.0"
+    compile group: "com.indri",     name: "IndexUI",             version: "1.0"
+
+    // Statistics
+    compile group: "com.googlecode.json-simple",     name: "json-simple",             version: "1.1"
+    compile group: "org.apache.httpcomponents",      name: "fluent-hc",               version: "4.3.1"
+    compile group: "org.eclipse.jgit",               name: "org.eclipse.jgit",        version: "3.2.0.201312181205-r"
+
+    // Search Engines
+    compile group: "org.apache.lucene",              name: "lucene-core",             version: "5.0.0"
+    compile group: "org.apache.lucene",              name: "lucene-queryparser",      version: "5.0.0"
+    compile group: "org.apache.lucene",              name: "lucene-analyzers-common", version: "5.0.0"
+    compile group: "org.apache.lucene",              name: "lucene-highlighter",      version: "5.0.0"
+    compile 'org.apache.lucene:lucene-backward-codecs:5.0.0'
+
+  //  compile group: "lemurproject.indri",             name: "indri",                   version: "5.7"
+    compile group: "com.google.api-client",          name: "google-api-client",       version: "1.17.0-rc"
+    compile 'com.google.apis:google-api-services-customsearch:v1-rev34-1.17.0-rc'
+    compile "com.google.http-client:google-http-client-jackson2:1.17.0-rc"
+    compile "org.apache.abdera:abdera-parser:1.1.1"
+    compile "org.jsoup:jsoup:1.7.3"
+
+    // Approximate String Matching
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'commons-dbutils:commons-dbutils:1.6'
+
+    // Indri native library
+//    natives "libindri-jni:libindri-jni:5.6"
+
+    ////  Persistence Libraries
+    // Sqlite native library (but it comes in a jar)
+    compile "org.xerial:sqlite-jdbc:3.8.7"
+    // PostgreSQL
+    compile 'org.postgresql:postgresql:9.3-1101-jdbc41'
+    // LMDB (for fast concurrent kv-storage)
+    compile 'org.deephacks.lmdbjni:lmdbjni:0.4.4'
+    compile 'org.deephacks.lmdbjni:lmdbjni-linux64:0.4.4'
+    compile 'org.deephacks.lmdbjni:lmdbjni-osx64:0.4.4'
+    //compile 'org.deephacks.lmdbjni:lmdbjni-win64:0.4.4'
+    // Leveldb for fast writes
+    compile 'org.fusesource.leveldbjni:leveldbjni-all:1.8'
+    // High performance primitive collections
+    compile 'com.carrotsearch:hppc:0.6.1'
+
+    ////  NLP Libraries
+    // OpenNLP
+    compile "org.apache.opennlp:opennlp-tools:1.5.3"
+    // Stanford CoreNLP
+    compile 'edu.stanford.nlp:stanford-corenlp:3.6.0'
+    compile 'edu.stanford.nlp:stanford-corenlp:3.6.0:models-english'
+    // SRParser models are necessary but too large for maven
+   // compile name: 'stanford-srparser-2014-08-28-models'
+
+    // WebDAV 
+    compile 'com.github.lookfirst:sardine:5.1'
+    //compile 'org.slf4j:slf4j-simple:1.6.1'
+	
+    // UIMA for Java
+    compile group:'org.apache.uima',	name: 'uimaj-core',	version: '2.3.1'
+
+    // lightweight web framework
+    compile 'javax.servlet:javax.servlet-api:3.1.0' // included because of a mismatch betwen groovy and spark
+    compile "com.sparkjava:spark-core:2.3"
+    compile "org.java-websocket:Java-WebSocket:1.3.0"
+
+    // multimaps and many other tools
+    compile "com.google.guava:guava:17.0"
+
+    compile "junit:junit:4.12"
+    // Jena for SPARQL connections
+    compile "org.apache.jena:jena-tdb:1.1.1"
+    // This is necessary for full text search
+    // But it also installs a .pom as a .jar as one of its transiitives
+    // and that makes Eclipse croak. So we will have to edit the classpath file
+    compile "org.apache.jena:jena-text:1.1.1"
+    compile 'xom:xom:+'
+    compile "xalan:xalan:+"
+    // Prolog interface for dependency tree matching
+    compile 'jpl:jpl:3.1.4-alpha'
+    compile 'it.unibo.alice.tuprolog:tuprolog:2.1.1'
+    // Persistent Data Structures for sane transactional semantics
+    compile "org.functionaljava:functionaljava-java8:4.2"
+    // LZ4 for efficiently compressing text
+    compile 'net.jpountz.lz4:lz4:1.3'
+    // Boilerpipe for extracting text from web pages
+    compile 'com.syncthemall:boilerpipe:1.2.2'
+    // Crawler-commons to extract text in a robots.txt friendly way
+    compile 'com.google.code.crawler-commons:crawler-commons:0.5'
+    // Semantic Vectors for improved Lucene scoring
+    compile 'pitt.search:semanticvectors:5.8'
+    // GSON for cache persistence
+    compile 'com.google.code.gson:gson:2.3.1'
+}
+
+compileJava { 
+  options.encoding = "UTF-8" 
+}
+
+task environment << {
+    download {
+        onlyIfNewer true
+        src 'http://nlp.stanford.edu/software/stanford-srparser-2014-08-28-models.jar'
+        dest 'lib'
+    }
+    download {
+        src 'https://dl.dropboxusercontent.com/u/92563044/watsonsim/data-snapshot.pgdump'         // ~50GB uncompressed, varies
+        src 'http://apache.osuosl.org/jena/binaries/jena-fuseki-1.1.1-distribution.tar.gz'        // ~50MB
+        src 'http://data.dws.informatik.uni-mannheim.de/dbpedia/2014/dbpedia_2014.owl.bz2'        // ~2 MB
+        src 'http://data.dws.informatik.uni-mannheim.de/dbpedia/2014/en/instance_types_en.nt.bz2' // ~4 GB
+        src 'http://data.dws.informatik.uni-mannheim.de/dbpedia/2014/en/labels_en.nt.bz2'         // ~1 GB
+        src 'http://data.dws.informatik.uni-mannheim.de/dbpedia/2014/en/instance_types_heuristic_en.nt.bz2'  // ~ 1 GB
+        src 'http://wifo5-04.informatik.uni-mannheim.de/downloads/datasets/genders_en.nt.bz2'     // 31 MB
+        src 'http://data.dws.informatik.uni-mannheim.de/dbpedia/2014/en/disambiguations_en.nt.bz2' // 194 MB
+        src 'http://data.dws.informatik.uni-mannheim.de/dbpedia/2014/en/short_abstracts_en.nt.bz2' // 1.8 GB
+        dest 'downloads'
+    }
+    copy {
+        from '/usr/share/java/libsvm.jar'
+        into 'lib'
+    }
+}
+
+run {
+    // Allow reading from stdin
+    standardInput = System.in
+    // Find Indri
+    systemProperty "java.library.path", file("$projectDir/lib:$projectDir/data/lib")
+    //jvmArgs "-XX:-UseCompressedOops"
+    minHeapSize = "3018M"
+    maxHeapSize = "5018M" 
+    jvmArgs "-XX:hashCode=5"
+    //jvmArgs "-Xns:100m"
+    //jvmArgs "-Xgcprio:throughput"
+    main "com.rsinghal.cep.assist.$target"
+}
+
+task(train, type:JavaExec) {
+    // Find Indri
+    main "com.rsinghal.cep.assist.scripts.ParallelStats"
+    systemProperty "java.library.path", file("$projectDir/lib:$projectDir/data/lib")
+}
+
+task(run_index, type: JavaExec) {
+    // Find Indri
+    systemProperty "java.library.path", file("$projectDir/lib:$projectDir/data/lib")
+    main "com.rsinghal.cep.assist.sources.DBIndexer"
+}
+
+test {
+    systemProperty "java.library.path", file("$projectDir/lib:$projectDir/data/lib")
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+eclipse {
+    classpath {
+        file.withXml {provider ->
+            provider.asNode().findAll { it.@path.contains("indri") }.each {
+                it.appendNode('attributes')
+                it.children().each {
+                    it.appendNode('attribute', [name: 'org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY', value: "$projectDir/lib"])
+                }
+            }
+        }
+    }
+}
+
+task writeNewPom << {
+    pom {
+        project {
+            inceptionYear '2016'
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+        }
+    }.writeTo("$buildDir/newpom.xml")
+}

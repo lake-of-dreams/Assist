@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="queryApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link href='http://fonts.googleapis.com/css?family=Schoolbell' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type='text/css'
+		href='http://fonts.googleapis.com/css?family=Share+Tech+Mono'>
+	<link rel="stylesheet" type='text/css' 
+		href='http://fonts.googleapis.com/css?family=Alegreya+Sans:500,700'> 
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="stylesheets/index.css" />
+	
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+	<script async src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.49/jquery.form.js"></script>
+	<script async src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script async src="scripts/index.js"></script>
+	<script src="scripts/query.js"></script>
+	
+	
+	<script defer type="text/javascript">
+	$( function(){  // Cutely suggest a question
+		var suggestions = [
+			"Who was the first man to walk on the moon?",
+			"Who founded Google?",
+			"Who wrote Emma?"];
+		$("#search input")
+			.prop("placeholder",
+				suggestions[Math.random() * suggestions.length | 0]);
+	});
+	</script>
+	<title> Assist </title>
+</head>
+<body ng-controller="QueryController as queryDetail">
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+			<span class='navbar-brand'>
+				Assist <small>alpha</small>
+			</span>
+			<form id="search" class="navbar-form navbar-right" ng-submit="queryDetail.begin()">
+				<input
+					type="search"
+					name="query"
+					placeholder="Who wrote Emma?"
+					size="60"
+					class="form-control"
+					autofocus />
+				<button class="btn btn-success"> Investigate! </button>
+			</form>
+		</div>
+	</nav>
+	<ul id="console" class="console container"></ul>
+	<div class="jumbotron container">
+		<center> {{queryDetail.note}} </center>
+		<ul id="results" class="container">
+			<li ng-repeat="answer in queryDetail.answers">
+				<span class="answer">
+					<span class="answer-bar" style="width: {{answer.score*90}}%;">
+					&nbsp;
+					</span>{{answer.score*100 | number : 0}}%
+					<details class='answer-details container'>
+						<summary class='answer-text'>{{answer.text}}</summary>
+						<ul class='nav nav-tabs'>
+							<li role='presentation' class='active'></li>
+						</ul>
+						<div class='col-md-12 col-md-height'>
+							<div class="panel panel-default">
+								<div class="panel-heading"> Sources </div>
+								<div class="panel-body">
+									<dl>
+										<span ng-repeat="passage in answer.passages" class="dl-horizontal">
+											<dt title="{{passage.title}}">{{passage.title}}</dt>
+											<dd>
+												<details><summary>{{passage.reference}}</summary>
+													{{passage.text}}
+												</details>
+											</dd>
+										</span>
+									</dl>
+								</div>
+							</div>
+						</div>
+						<div class='col-md-12 col-md-height'>
+							<div class="panel panel-default">
+								<div class="panel-heading"> Scores </div>
+								<div class="panel-body">
+									<dl>
+										<span ng-repeat="(key, val) in answer.scores" class="dl-horizontal">
+											<dt>{{key}}</dt>
+											<dd>{{val}}</dd>
+										</span>
+									</dl>
+								</div>
+							</div>
+						</div>
+						<div class='col-md-12'>
+							<div class="panel panel-default">
+								<div class="panel-heading">  Research Log </div>
+								<div class="panel-body">
+									<dl>
+										<span ng-repeat="evidence in answer.evidence" class="dl-horizontal">
+											<dt>[{{evidence.source}}]</dt>
+											<dd>{{evidence.note}}</dd>
+										</span>
+									</dl>
+								</div>
+							</div>
+						</div>
+					</details>
+				</span>
+			</li>
+		</ul>
+		<ul id="res"></ul>
+	</div>
+
+</body>
+</html>

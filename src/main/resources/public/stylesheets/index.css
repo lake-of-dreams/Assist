@@ -1,0 +1,124 @@
+.navbar {
+	margin-bottom: 0;
+}
+
+.navbar-brand {
+    font-family: 'Alegreya Sans', sans-serif;
+    color: white;
+    font-size: 225%;
+    vertical-align: middle;
+}
+
+.navbar-brand small {
+	position: relative;
+	top: 4px;
+	right: 5px;
+	display: inline-block;
+	transform: rotate(-20deg);
+    color: #ccc;
+	font-size: 65%;
+}
+
+body, .jumbotron {
+	background: rgb(245, 235, 207);
+}
+
+.jumbotron {
+	font-family: 'Schoolbell', cursive;
+    font-size:  x-large;
+	color: white;
+	background: #9b9;
+	border: 8px solid #ddd;
+	border-bottom-width: 15px;
+	margin-top: 1em;
+	padding: 0.25em 1em;
+	min-height: 10em;
+}
+
+#results {
+    list-style-type: none;
+}
+
+#results .answer-text {
+	font-family: 'Schoolbell', cursive;
+    font-size:  x-large;
+}
+
+#results .answer {
+    display: block;
+    margin-bottom: 0.2em;
+}
+
+#results .answer-bar {
+	/* A chalk background */
+    display:  inline-block;
+    margin-right: 1em;
+    padding: 0.15em 0;
+    background-color: #f7f7f7;
+	background:
+		url(/chalk-left-end.png) left center no-repeat,
+		url(/chalk-bar.png) left center repeat-x,
+		url(/chalk-right-end.png) right center no-repeat;
+	background-size: 10px, 220px, 10px;
+}
+
+.answer-details {
+	font-size: medium;
+	font-family: sans-serif;
+}
+
+.answer-details .panel {
+	color: initial;
+}
+
+#console, .console {
+    list-style-type: none;
+    background-color: black;
+    color: #ddd;
+    font-family: monospace;
+}
+
+#console {
+	display: none;
+    height: 20em;
+    overflow-y: scroll;
+}
+
+/* columns of same height styles */
+
+.row-full-height {
+  height: 100%;
+}
+.col-full-height {
+  height: 100%;
+  vertical-align: middle;
+}
+.row-same-height {
+  display: table;
+  width: 100%;
+  /* fix overflow */
+  table-layout: fixed;
+}
+.col-xs-height {
+  display: table-cell;
+  float: none !important;
+}
+
+@media (min-width: 768px) {
+  .col-sm-height {
+    display: table-cell;
+    float: none !important;
+  }
+}
+@media (min-width: 992px) {
+  .col-md-height {
+    display: table-cell;
+    float: none !important;
+  }
+}
+@media (min-width: 1200px) {
+  .col-lg-height {
+    display: table-cell;
+    float: none !important;
+  }
+}
