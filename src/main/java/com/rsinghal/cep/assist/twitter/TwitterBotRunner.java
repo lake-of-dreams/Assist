@@ -7,7 +7,7 @@ public class TwitterBotRunner {
 
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"classpath:applicationContext2.xml");
+				"classpath:applicationContext.xml");
 
 		TwitterBot obj12 = (TwitterBot) context
 				.getBean("twitterbot");

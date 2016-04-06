@@ -1,5 +1,5 @@
 /**
- * Copyright 2013 Twitter, Inc.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -13,7 +13,7 @@
 
 package com.rsinghal.cep.assist.twitter;
 
-import java.io.IOException;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,9 +72,7 @@ public class TwitterBot  {
 	private AtomicLong stallWarningCounter = new AtomicLong(0);
 	private AtomicLong stallWarningMessageCounter = new AtomicLong(0);
 	
-	private String kafkaHostname;
-	private String kafkaPort;
-	private String kafkaTopicName;
+
 	private int numberOfProcessingThreads = 5; 
 	
 	private String consumerKey;
@@ -154,20 +152,7 @@ public class TwitterBot  {
 	    return stallWarningMessageCounter.longValue();
 	}
 
-	@Required
-	public void setKafkaTopicName(String kafkaTopicName) {
-		this.kafkaTopicName = kafkaTopicName;
-	}
-
-	@Required
-	public void setKafkaHostname(String kafkaHostname) {
-		this.kafkaHostname = kafkaHostname;
-	}
-
-	@Required
-	public void setKafkaPort(String kafkaPort) {
-		this.kafkaPort = kafkaPort;
-	}
+	
 
 	public void setNumberOfProcessingThreads(int numberOfProcessingThreads) {
 		this.numberOfProcessingThreads = numberOfProcessingThreads;
