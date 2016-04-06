@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+         	http://www.springframework.org/schema/context
+         	http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/task  
+   			http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<context:property-placeholder location="classpath*:configuration.properties" system-properties-mode="ENVIRONMENT"/>
+<!-- 
+	<context:mbean-export registration="replaceExisting" />
+ -->
+	<task:annotation-driven executor="executor" scheduler="scheduler"/>
+	<task:executor id="executor" pool-size="5"/>
+	<task:scheduler id="scheduler" pool-size="10"/>
+
+	<bean id="twitterbot" destroy-method="stop"
+		class="com.rsinghal.cep.sample.twitter.TwitterBot">
+		<property name="kafkaHostname" value="azcep02" />
+                <property name="kafkaPort" value="9092" />
+                <property name="kafkaTopicName" value="cep-kafka-1-topic-2" />
+                <property name="consumerKey" value="zGxwjaJ90g6bA1sO1x4BlbOC7"/>
+                <property name="consumerSecret" value="ncDv6RtwnEJnSRvVciBMy83PaaM7lO1RB9C2HU0PEEgWFDYkYi"/>
+                <property name="accessToken" value="4924581980-VyE0ChfcZ1N1IgBoZ3pWINX672rZjAHgoROtwFX"/>
+                <property name="accessTokenSecret" value="T61MtyWZIXKuG3y2mqyQ7W9Mo3BOPbTLOKGCCRAf5ANJe"/>
+		 <property name="trackTerms">
+                <list>
+                <value>@MyBank_Bot</value>
+               
+                </list>
+                </property>
+
+		<property name="numberOfProcessingThreads" value="5" />
+		<property name="redisHostname" value="azcep02" />
+                <property name="redisPort" value="6379" />
+
+	</bean>
+
+</beans>
