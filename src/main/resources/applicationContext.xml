@@ -18,7 +18,7 @@
 	<task:scheduler id="scheduler" pool-size="10"/>
 
 	<bean id="twitterbot" destroy-method="stop"
-		class="com.rsinghal.cep.sample.twitter.TwitterBot">
+		class="com.rsinghal.cep.assist.twitter.TwitterBot">
                 <property name="consumerKey" value="zGxwjaJ90g6bA1sO1x4BlbOC7"/>
                 <property name="consumerSecret" value="ncDv6RtwnEJnSRvVciBMy83PaaM7lO1RB9C2HU0PEEgWFDYkYi"/>
                 <property name="accessToken" value="4924581980-VyE0ChfcZ1N1IgBoZ3pWINX672rZjAHgoROtwFX"/>
